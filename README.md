@@ -1,73 +1,77 @@
-# React + TypeScript + Vite
+# Koopa Jump (404 Interactive Game)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive, retro-styled jumping game featuring Koopa Troopa. This project is designed to be easily integrated as a fun 404 error page or a standalone mini-game.
 
-Currently, two official plugins are available:
+## 🎮 How to Play
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Start**: Press **Space**, **Arrow Up**, or **Click/Tap** the screen.
+- **Jump**: Press **Space** or **Arrow Up** to jump over obstacles.
+- **Goal**: Avoid the Piranha Plants and survive as long as possible to get a high score!
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Dynamic Difficulty**: The game speed gradually increases as you play, capping at a challenging but fair maximum speed.
+- **Animated Sprites**: Hand-crafted animations for Koopa (walking, jumping, idling) and the Piranha Plants.
+- **Interactive Transitions**: Starts in a stylish greyscale "idle" mode and fades into full color once the game begins.
+- **Customizable Messaging**: Supports a `message` prop to display custom text (like "404 Not Found") on the start screen.
+- **Parallax-style Background**: Floating clouds that move independently of the ground obstacles.
+- **Persistent High Scores**: Saves your best score locally using Browser Storage.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Framework**: React 19 (TypeScript)
+- **Build Tool**: Vite 8
+- **Styling**: Vanilla CSS (Surgical precision, no heavy frameworks)
+- **Asset Pipeline**: ESM imports for optimized bundling and cache-busting.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
+- Node.js (Latest LTS recommended)
+- npm or yarn
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd koopasaur
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Building for Production
+
+To create an optimized production build:
+```bash
+npm run build
+```
+The output will be in the `dist/` folder.
+
+## 📁 Project Structure
+
+- `src/components/KoopaJump/`: Core game logic and components.
+  - `KoopaJump.tsx`: Main game state and orchestration.
+  - `Player.tsx`: Koopa character logic and animations.
+  - `Obstacle.tsx`: Pipe and Piranha Plant logic.
+  - `Cloud.tsx`: Background cloud component.
+  - `useGameLoop.ts`: Custom hook for the high-performance requestAnimationFrame loop.
+- `src/assets/`: Optimized game sprites and artwork.
+
+## 🔧 Customization
+
+You can pass a custom message to the game via the `message` prop in `App.tsx`:
+
+```tsx
+<KoopaJump message="Page Not Found" />
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Enjoy the jump! 🐢💨

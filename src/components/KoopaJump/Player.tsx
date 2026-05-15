@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { GROUND_HEIGHT } from './constants';
 import './styles.css';
 
+import standImg from '../../assets/stand.png';
+import jumpImg from '../../assets/jump.png';
+import frame1Img from '../../assets/6.png';
+import frame2Img from '../../assets/7.png';
+
 interface PlayerProps {
   y: number;
   isJumping: boolean;
@@ -26,7 +31,7 @@ const Player: React.FC<PlayerProps> = ({ y, isJumping, isMoving, isIdle }) => {
     };
   }, [isMoving, isJumping]);
 
-  let imgSrc = isIdle ? '/stand.png' : (isJumping ? '/jump.png' : (frame === 0 ? '/6.png' : '/7.png'));
+  let imgSrc = isIdle ? standImg : (isJumping ? jumpImg : (frame === 0 ? frame1Img : frame2Img));
 
   return (
     <div

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { GROUND_HEIGHT } from './constants';
 import './styles.css';
 
+import pipeImg from '../../assets/pipe.png';
+import plant1Img from '../../assets/plant1.png';
+import plant2Img from '../../assets/plant2.png';
+
 interface ObstacleProps {
   x: number;
 }
@@ -16,6 +20,8 @@ const Obstacle: React.FC<ObstacleProps> = ({ x }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const plantImg = plantFrame === 1 ? plant1Img : plant2Img;
+
   return (
     <div
       className="obstacle-container"
@@ -26,13 +32,13 @@ const Obstacle: React.FC<ObstacleProps> = ({ x }) => {
     >
       <div className="piranha-plant">
         <img 
-          src={`/plant${plantFrame}.png`} 
+          src={plantImg} 
           alt="Piranha Plant" 
           className="plant-img" 
         />
       </div>
       <div className="pipe">
-        <img src="/pipe.png" alt="Pipe" className="pipe-img" />
+        <img src={pipeImg} alt="Pipe" className="pipe-img" />
       </div>
     </div>
   );

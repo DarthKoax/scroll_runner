@@ -1,4 +1,5 @@
 import React from 'react';
+import cloudImg from '../../assets/cloud.png';
 
 interface CloudProps {
   x: number;
@@ -20,7 +21,7 @@ const Cloud: React.FC<CloudProps> = ({ x, y, scale, className }) => {
         zIndex: 0,
       }}
     >
-      <img src="/cloud.png" alt="Cloud" style={{ width: '100%', height: 'auto' }} />
+      <img src={cloudImg} alt="Cloud" style={{ width: '100%', height: 'auto' }} />
     </div>
   );
 };
