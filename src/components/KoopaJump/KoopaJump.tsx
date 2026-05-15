@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Player from './Player';
 import Obstacle from './Obstacle';
+import Cloud from './Cloud';
 import { useGameLoop } from './useGameLoop';
 import {
   GAME_WIDTH,
@@ -14,6 +15,14 @@ import {
 } from './constants';
 import './styles.css';
 
+interface CloudData {
+  id: number;
+  x: number;
+  y: number;
+  scale: number;
+  speed: number;
+}
+
 interface ObstacleData {
   id: number;
   x: number;
@@ -25,6 +34,7 @@ const KoopaJump: React.FC = () => {
   const playerYRef = useRef(0);
   const velocityYRef = useRef(0);
   const [obstacles, setObstacles] = useState<ObstacleData[]>([]);
+  const [clouds, setClouds] = useState<CloudData[]>([]);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(
     parseInt(localStorage.getItem('koopaJumpHighScore') || '0', 10)
@@ -32,7 +42,9 @@ const KoopaJump: React.FC = () => {
   const [speed, setSpeed] = useState(INITIAL_SPEED);
 
   const nextObstacleId = useRef(0);
+  const nextCloudId = useRef(0);
   const lastSpawnTime = useRef(0);
+  const lastCloudSpawnTime = useRef(0);
 
   const handleJump = useCallback(() => {
     console.log('handleJump called. GameState:', gameState, 'PlayerY:', playerYRef.current);
@@ -52,10 +64,13 @@ const KoopaJump: React.FC = () => {
     setDisplayY(0);
     velocityYRef.current = 0;
     setObstacles([]);
+    setClouds([]);
     setScore(0);
     setSpeed(INITIAL_SPEED);
     nextObstacleId.current = 0;
+    nextCloudId.current = 0;
     lastSpawnTime.current = performance.now();
+    lastCloudSpawnTime.current = performance.now();
   };
 
   useEffect(() => {
@@ -113,6 +128,27 @@ const KoopaJump: React.FC = () => {
       return newObstacles;
     });
 
+    // Update Clouds
+    setClouds((prev) => {
+      const newClouds = prev
+        .map((cloud) => ({ ...cloud, x: cloud.x - cloud.speed }))
+        .filter((cloud) => cloud.x > -150);
+
+      // Spawn new cloud
+      const now = performance.now();
+      if (now - lastCloudSpawnTime.current > 2000 && Math.random() > 0.97) {
+        newClouds.push({
+          id: nextCloudId.current++,
+          x: GAME_WIDTH,
+          y: Math.random() * 100 + 20,
+          scale: Math.random() * 0.5 + 0.8,
+          speed: Math.random() * 0.5 + 0.5,
+        });
+        lastCloudSpawnTime.current = now;
+      }
+      return newClouds;
+    });
+
     // Update Score
     setScore((prev) => prev + 1);
 
@@ -159,6 +195,10 @@ const KoopaJump: React.FC = () => {
       )}
       
       <div className="ground" />
+
+      {clouds.map((cloud) => (
+        <Cloud key={cloud.id} x={cloud.x} y={cloud.y} scale={cloud.scale} />
+      ))}
       
       <Player 
         y={displayY} 

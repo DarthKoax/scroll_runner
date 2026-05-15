@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GROUND_HEIGHT } from './constants';
 import './styles.css';
 
@@ -7,6 +7,15 @@ interface ObstacleProps {
 }
 
 const Obstacle: React.FC<ObstacleProps> = ({ x }) => {
+  const [plantFrame, setPlantFrame] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlantFrame((prev) => (prev === 1 ? 2 : 1));
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
       className="obstacle-container"
@@ -16,7 +25,11 @@ const Obstacle: React.FC<ObstacleProps> = ({ x }) => {
       }}
     >
       <div className="piranha-plant">
-        <img src="/plant1.png" alt="Piranha Plant" className="plant-img" />
+        <img 
+          src={`/plant${plantFrame}.png`} 
+          alt="Piranha Plant" 
+          className="plant-img" 
+        />
       </div>
       <div className="pipe">
         <img src="/pipe.png" alt="Pipe" className="pipe-img" />
