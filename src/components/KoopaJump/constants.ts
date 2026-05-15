@@ -5,6 +5,7 @@ export const GROUND_HEIGHT = 40;
 export const GRAVITY = 0.9;
 export const JUMP_STRENGTH = -16.0;
 export const INITIAL_SPEED = 5;
+export const MAX_SPEED = 12;
 export const SPEED_INCREMENT = 0.0003;
 
 export const PLAYER_WIDTH = 90;

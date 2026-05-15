@@ -84,6 +84,28 @@
   to { transform: translateY(30px); }
 }
 
+.start-message {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  text-shadow: 3px 3px #000;
+  z-index: 10;
+  width: 100%;
+}
+
+.start-message h1 {
+  font-size: 64px;
+  margin: 0;
+}
+
+.start-message p {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
 .score-board {
   position: absolute;
   top: 10px;

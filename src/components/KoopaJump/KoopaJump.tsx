@@ -8,6 +8,7 @@ import {
   GRAVITY,
   JUMP_STRENGTH,
   INITIAL_SPEED,
+  MAX_SPEED,
   SPEED_INCREMENT,
   PLAYER_WIDTH,
   OBSTACLE_WIDTH,
@@ -28,7 +29,11 @@ interface ObstacleData {
   x: number;
 }
 
-const KoopaJump: React.FC = () => {
+interface KoopaJumpProps {
+  message?: string;
+}
+
+const KoopaJump: React.FC<KoopaJumpProps> = ({ message = "KOOPA JUMP" }) => {
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAME_OVER'>('START');
   const [displayY, setDisplayY] = useState(0);
   const playerYRef = useRef(0);
@@ -87,7 +92,7 @@ const KoopaJump: React.FC = () => {
     if (gameState !== 'PLAYING') return;
 
     // Update Speed
-    setSpeed((prev) => prev + SPEED_INCREMENT * deltaTime);
+    setSpeed((prev) => Math.min(MAX_SPEED, prev + SPEED_INCREMENT * deltaTime));
 
     // Update Player
     const dtScale = Math.min(deltaTime / 16.67, 3); // Cap to avoid huge jumps during lag
@@ -206,6 +211,15 @@ const KoopaJump: React.FC = () => {
         isMoving={gameState === 'PLAYING'} 
         isIdle={gameState === 'START'} 
       />
+
+      {gameState === 'START' && (
+        <>
+          <Cloud x={600} y={40} scale={1.2} />
+          <div className="start-message">
+            <h1>{message}</h1>
+          </div>
+        </>
+      )}
       
       {obstacles.map((obs) => (
         <Obstacle key={obs.id} x={obs.x} />
